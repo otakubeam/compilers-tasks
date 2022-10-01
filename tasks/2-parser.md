@@ -103,7 +103,7 @@ Expression* ParseComparison() {
 
 #### Изображение
 
-![Рекурсивный спуск](media/3-parsing.png)
+![Рекурсивный спуск](media/3-smaller.png)
 
 #### Левая рекурсия
 
