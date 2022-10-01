@@ -13,9 +13,11 @@ class IdentTable {
     Populate();
   }
 
-  TokenType Lookup(const std::string&) {
-    // Your code goes here
-    std::abort();
+  TokenType Lookup(const std::string& lexeme) {
+    if (!map_.contains(lexeme)) {
+      map_.insert({lexeme, TokenType::IDENTIFIER});
+    }
+    return map_[lexeme];
   }
 
  private:

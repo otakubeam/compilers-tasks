@@ -93,15 +93,61 @@ void Lexer::SkipComments() {
 ////////////////////////////////////////////////////////////////////
 
 std::optional<Token> Lexer::MatchOperators() {
-  // Your code goes here
-  std::abort();
+  if (auto type = MatchOperator()) {
+    scanner_.MoveRight();
+    return Token{*type, scanner_.GetLocation()};
+  }
+
+  return std::nullopt;
 }
 
 ////////////////////////////////////////////////////////////////////
 
 std::optional<TokenType> Lexer::MatchOperator() {
-  // Your code goes here
-  std::abort();
+  switch (scanner_.CurrentSymbol()) {
+      // TODO: make less special
+    case '=': {
+      if (scanner_.PeekNextSymbol() == '=') {
+        scanner_.MoveRight();
+        return TokenType::EQUALS;
+      } else {
+        return TokenType::ASSIGN;
+      }
+    }
+
+    case '+':
+      return TokenType::PLUS;
+    case '-':
+      return TokenType::MINUS;
+    case '*':
+      return TokenType::STAR;
+    case '&':
+      return TokenType::ADDR;
+    case '!':
+      return TokenType::NOT;
+    case '<':
+      return TokenType::LT;
+    case '(':
+      return TokenType::LEFT_BRACE;
+    case ')':
+      return TokenType::RIGHT_BRACE;
+    case '{':
+      return TokenType::LEFT_CBRACE;
+    case '}':
+      return TokenType::RIGHT_CBRACE;
+    case ';':
+      return TokenType::SEMICOLUMN;
+    case ':':
+      return TokenType::COLUMN;
+    case ',':
+      return TokenType::COMMA;
+    case '.':
+      return TokenType::DOT;
+    case EOF:
+      return TokenType::TOKEN_EOF;
+    default:
+      return std::nullopt;
+  }
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -121,22 +167,64 @@ std::optional<Token> Lexer::MatchLiterls() {
 ////////////////////////////////////////////////////////////////////
 
 std::optional<Token> Lexer::MatchNumericLiteral() {
-  // Your code goes here
-  std::abort();
+  int result = 0, match_span = 0;
+
+  while (isdigit(scanner_.CurrentSymbol())) {
+    result *= 10;
+    result += scanner_.CurrentSymbol() - '0';
+
+    scanner_.MoveRight();
+    match_span += 1;
+  }
+
+  if (match_span == 0) {
+    return std::nullopt;
+  }
+
+  return Token{TokenType::NUMBER, scanner_.GetLocation(), {result}};
 }
 
 ////////////////////////////////////////////////////////////////////
 
 std::optional<Token> Lexer::MatchStringLiteral() {
-  // Your code goes here
-  std::abort();
+  auto first_quote = [](char first) -> bool {
+    return first == '\"';
+  };
+
+  if (!first_quote(scanner_.CurrentSymbol())) {
+    return std::nullopt;
+  }
+
+  // It matched! Now do match the whole string
+
+  // Consume commencing "
+  scanner_.MoveRight();
+
+  std::string lit;
+  while (scanner_.CurrentSymbol() != '\"') {
+    lit.push_back(scanner_.CurrentSymbol());
+    scanner_.MoveRight();
+  }
+
+  // Consume enclosing "
+  scanner_.MoveRight();
+
+  return Token{TokenType::STRING, scanner_.GetLocation(), {lit}};
 }
 
 ////////////////////////////////////////////////////////////////////
 
 std::optional<Token> Lexer::MatchWords() {
-  // Your code goes here
-  std::abort();
+  auto word = BufferWord();
+  auto type = table_.Lookup(word);
+
+  if (type == TokenType::IDENTIFIER) {
+    return Token{type, scanner_.GetLocation(), {word}};
+  }
+
+  // So it must be a keyword with the
+  // exact type encoded direcly in `type`
+  return Token{type, scanner_.GetLocation()};
 }
 
 ////////////////////////////////////////////////////////////////////

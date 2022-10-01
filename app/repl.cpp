@@ -1,21 +1,22 @@
-#include <lex/token_type.hpp>
+#include <parse/parse_error.hpp>
+#include <parse/parser.hpp>
+
 #include <lex/errors.hpp>
-#include <lex/lexer.hpp>
 
 #include <fmt/color.h>
 
 #include <iostream>
 
 int main() {
-  lex::Lexer lexer(std::cin);
+  Parser parser{lex::Lexer(std::cin)};
 
   while (true) try {
-      auto token = lexer.GetNextToken();
-
-      // Try also to get seminfo from numbers, identifiers, strings
-
-      fmt::print("The token type is {}\n", lex::FormatTokenType(token.type));
+      auto stmt = parser.ParseStatement();
+      fmt::print("Statement location is {}", stmt->GetLocation().Format());
     } catch (lex::LexError& error) {
+      fmt::print("{}", error.what());
+      return 0;
+    } catch (parse::errors::ParseError& error) {
       fmt::print("{}", error.what());
       return 0;
     }
