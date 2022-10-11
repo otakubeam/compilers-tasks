@@ -14,12 +14,19 @@ class Parser {
 
   Statement* ParseExprStatement();
   FunDeclStatement* ParseFunDeclStatement();
+  ReturnStatement* ParseReturnStatement();
   VarDeclStatement* ParseVarDeclStatement();
   AssignmentStatement* ParseAssignment(LvalueExpression* target);
 
   ////////////////////////////////////////////////////////////////////
 
   Expression* ParseExpression();
+
+  Expression* ParseIfExpression();
+  Expression* ParseBlockExpression();
+
+  // You can remove the id and use GetPreviousToken
+  Expression* ParseFnCallExpression(lex::Token id); 
 
   Expression* ParseComparison();
   Expression* ParseBinary();
@@ -28,7 +35,20 @@ class Parser {
 
   ////////////////////////////////////////////////////////////////////
 
+  types::Type* ParseType();
+  types::Type* ParseFunctionType();
+  types::Type* ParseStructType();
+
+  ////////////////////////////////////////////////////////////////////
+
  private:
+  // Used for parsing parameters of functions
+  //
+  // Try to implement passing lambdas as callbacks
+  //
+  // template <typename F> (?)
+  auto ParseCSV() -> std::vector<Expression*>;
+
   bool Matches(lex::TokenType type);
   void Consume(lex::TokenType type);
 

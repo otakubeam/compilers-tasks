@@ -22,6 +22,13 @@ Statement* Parser::ParseStatement() {
 
 ///////////////////////////////////////////////////////////////////
 
+// Syntax: `fun` NAME ( FORMAL,* ) RETURN_TYPE BLOCK_EXPRESSION
+FunDeclStatement* Parser::ParseFunDeclStatement() {
+  std::abort();  // Your code goes here
+}
+
+///////////////////////////////////////////////////////////////////
+
 VarDeclStatement* Parser::ParseVarDeclStatement() {
   if (!Matches(lex::TokenType::VAR)) {
     return nullptr;

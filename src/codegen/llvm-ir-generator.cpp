@@ -1,11 +1,12 @@
-#pragma once
-
 #include <codegen/llvm-ir-generator.hpp>
 
 #include <ast/expressions.hpp>
 #include <ast/statements.hpp>
 
 namespace codegen {
+
+// Start with this:
+// https://llvm.org/docs/tutorial/MyFirstLanguageFrontend/LangImpl03.html
 
 LLVMIrGenerator::LLVMIrGenerator() : module_{"file", context_} {
 }
@@ -47,15 +48,16 @@ void LLVMIrGenerator::VisitFnCall(FnCallExpression*) {
 
 void LLVMIrGenerator::VisitLiteral(LiteralExpression* node) {
   switch (node->token_.type) {
-    case lex::TokenType::NUMBER:
-      return_value = llvm::ConstantInt::get(
-          context_,
-          llvm::APInt{
-              32,                                              // numBits
-              (uint64_t)std::get<int>(node->token_.sem_info),  // val
-              true,                                            // isSigned
-          });
+    case lex::TokenType::NUMBER: {
+      auto value = std::get<int>(node->token_.sem_info);
+      auto llvm_int = llvm::APInt{
+          32,               // numBits
+          (uint64_t)value,  // val
+          true,             // isSigned
+      };
+      return_value = llvm::ConstantInt::get(context_, llvm_int);
       break;
+    }
 
     default:
       FMT_ASSERT(false, "Typechecking unknown literal");

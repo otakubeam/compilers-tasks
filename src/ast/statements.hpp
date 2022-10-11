@@ -34,6 +34,26 @@ class ExprStatement : public Statement {
 
 //////////////////////////////////////////////////////////////////////
 
+class ReturnStatement : public Statement {
+ public:
+  ReturnStatement(lex::Token return_token, Expression* return_value)
+      : return_token_{return_token}, return_value_{return_value} {
+  }
+
+  virtual void Accept(Visitor* visitor) override {
+    visitor->VisitReturn(this);
+  }
+
+  virtual lex::Location GetLocation() override {
+    return return_token_.location;
+  }
+
+  lex::Token return_token_;
+  Expression* return_value_;
+};
+
+//////////////////////////////////////////////////////////////////////
+
 class VarDeclStatement : public Statement {
  public:
   VarDeclStatement(VarAccessExpression* lvalue, Expression* value)

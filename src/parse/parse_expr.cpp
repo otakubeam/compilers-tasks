@@ -9,6 +9,32 @@ Expression* Parser::ParseExpression() {
 
 ///////////////////////////////////////////////////////////////////
 
+Expression* Parser::ParseIfExpression() {
+  std::abort();  // Your code goes here
+}
+
+////////////////////////////////////////////////////////////////////
+
+Expression* Parser::ParseBlockExpression() {
+  std::abort();  // Your code goes here
+}
+
+////////////////////////////////////////////////////////////////////
+
+// Assume non-empty
+// Parse comma separated values
+std::vector<Expression*> Parser::ParseCSV() {
+  std::abort();
+}
+
+////////////////////////////////////////////////////////////////////
+
+Expression* Parser::ParseFnCallExpression(lex::Token ) {
+  std::abort();  // Your code goes here
+}
+
+///////////////////////////////////////////////////////////////////
+
 Expression* Parser::ParseComparison() {
   Expression* first = ParseBinary();
 
