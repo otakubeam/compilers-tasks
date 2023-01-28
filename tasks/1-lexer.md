@@ -1,67 +1,99 @@
-## Первая стадия: лексер
+# 1. Лексер
 
-0. Изучите структуру проекта, что конкретно собирается, что с чем линкуется, какие директории есть
+Непосредственно перед парсингом исходный текст программы разбивается на
+отдельные лексемы (токены).
 
-1. Установитe библиотеку для форматирования `fmt` 
+С каждым токеном ассоциирована его позиция в тексте программы и, возможно,
+семантическая информация.  Например,
 
-2. Установитe библиотеку для тестрирования `catch2`
+`fun main = 0;`
+  
+```
+  fun  => TK_FUN         (no semantic info)  loc = {line: 1, col: 1}
+  main => TK_IDENTIFIER  ("main")            loc = {line: 1, col: 5}
+   =   => TK_ASSIGN      (no semantic info)  loc = {line: 1, col: 10}
+   0   => TK_NUM         (0)                 loc = {line: 1, col: 12}
+   ;   => TK_SEMICOLON   (no semantic info)  loc = {line: 1, col: 13}
+```
 
-   Если будут проблемы с установкой, можно сделать докер-контейнер. Пишите!
-
-3. `cmake -B build` 
-
-   Команда выполняется из корня проекта
-   
-   Далее следует настроить **автодополнение**. Напишите, если с этом возникнут
-   сложности. Автодополнение __должно быть__.
-
-4. `make -j8` 
-   
-   Команда выполняется из директории `build` 
-
-5. `./tests/test` 
-
-   - Для запуска тестов
-   - Из директории build 
-
-6. `./app/repl`
-   
-   - Для интерактива: вы набираете текст и смотрите, какие типы токенов
-     разпознаёт лекскер
+В итоге лексер преобразует поток символов в поток токенов (более выскоий
+уровень абстракции), изолируя парсер от работы с символами.
 
 ## Задание
 
-1. Дописать недостающие функции, чтобы [Lexer::GetNextToken()](https://git.sr.ht/~orazov_ae/compilers-tasks/tree/master/item/src/lex/lexer.cpp#L12) заработал (проходил тесты)
+Вам предлагается разработать лексер для языка Étude.
 
-   В частности:
+1. Прочитайте [Crafting Interpreters: Scanning](https://craftinginterpreters.com/scanning.html).
+2. Заполните `enum TokenType` всеми возможными типами токенов.
+3. Создайте структуру `Token`, содержащую
+   -  позицию токена в тексте, 
+   -  семантическую информацю о токене,
+   -  его тип
+4. Реализуйте `IdentTable` — отображение `string_view → TokenType`
+5. Реализуйте `Scanner`
+   - **Считывание данных** в буффер
+   - **Отслеживание позиции** в тексте
+   - Просмотр **текущего символа**
+6. Восполните пробелы в реализации класса `Lexer`
+   - Научите лексер обрабатывать **числа**
+   - Научите лексре распознавать **операторы** языка
+   - Научите лексер распознавать **строки**
+   - Пропускайте **комментарии**
+   - Реализуйте метод `Matches`
 
-   - MatchOperators
-   - MatchLiterls
-   - MatchNumericLiteral
-   - MatchStringLiteral
-   - MatchWords (keywords)
-   - IdentTable::Lookup
+Цель — создать простой фреймворк для работы с текском, позволяющий без труда 
+добавлять ключевые слова и операторы в дальнейшем (сейчас список намеренно
+небольшой).
+    
+## Реализация
 
-     [Здесь](https://git.sr.ht/~orazov_ae/compilers-tasks/tree/master/item/src/lex/ident_table.hpp#L16)
+Класс `Scanner` позволяет отделить механику чтения из потока и обработки
+позиции в тексте от непосредственной работы с символами. Для простоты вам
+предлагается считывать файл в буффер целиком.
 
-Разумеется, это только один из способов. Вы можете выразить `GetNextToken`
-через другие функции. Также можете изменять значения ключевых слов и типы
-токенов по желанию.
+Для ссылки на позиции в тексте используйте `std::string_view`
 
-2. Сделайте так, чтобы Scanner записывал все встретившиеся ему символы в
-   буффер. Это пригодится для обработки ошибок: помимо локации мы сможем
-   указать прямо на строчку кода, где допущена ошибка.
+Для поддержания семантической информации о токене используйте `std::variant`
+или C—style `union`
 
-   Тогда имеет смысл, чтобы `struct Location` указывала на свою позицию в этом
-   буфере.
+## Appendix A. Token Types
+
+  | Token Type                 | Source                     |
+  | -----------                | -------                    |
+  | `NUMBER`                   | `(0..9)+`                  |
+  | `STRING`                   | `" <any char except">* "`  |
+  | `IDENTIFIER`               | `ALPHA ( ALPHA | DIGIT )*` |
+  | `TRUE`                     | `true`                     |
+  | `FALSE`                    | `false`                    |
+  | `PLUS`                     | `+`                        |
+  | `MINUS`                    | `-`                        |
+  | `STAR`                     | `*`                        |
+  | `DIV`                      | `/`                        |
+  | `ASSIGN`                   | `=`                        |
+  | `EQUALS`                   | `==`                       |
+  | `NOT_EQ`                   | `!=`                       |
+  | `NOT`                      | `!`                        |
+  | `LT`                       | `<`                        |
+  | `GT`                       | `>`                        |
+  | `LEFT_PAREN`               | `(`                        |
+  | `RIGHT_PAREN`              | `)`                        |
+  | `LEFT_CBRACE`              | `{`                        |
+  | `RIGHT_CBRACE`             | `}`                        |
+  | `COMMA`                    | `,`                        |
+  | `COLON`                    | `;`                        |
+  | `FUN`                      | `fun`                      |
+  | `VAR`                      | `var`                      |
+  | `IF`                       | `if`                       |
+  | `THEN`                     | `then`                     |
+  | `ELSE`                     | `else`                     |
+  | `RETURN`                   | `return`                   |
+  | `TOKEN_EOF`                | EOF                        |
 
 ### Examples
 
 Изучите чужие реализации: 
 
-- [Crafting Interpreters Book](https://craftinginterpreters.com/scanning.html)
-
-- [Лексер языка Hare](https://git.sr.ht/~sircmpwn/harec/tree/master/item/src/lex.c)
+- [Hare](https://git.sr.ht/~sircmpwn/harec/tree/master/item/src/lex.c)
 
 - Язык Go
   - [Token](https://go.dev/src/go/token/token.go)
@@ -78,8 +110,5 @@
   
   - [Token](https://doc.rust-lang.org/nightly/nightly-rustc/src/rustc_lexer/lib.rs.html#41-44)
 
-- Вероятно, самый продвинутый в мире JIT компилятор v8 [scanner](https://github.com/v8/v8/blob/main/src/parsing/scanner.h)
-
-- Clang [lexer](https://github.com/llvm/llvm-project/blob/main/clang/lib/Lex/Lexer.cpp)
-
-Последние скорее для устрашения =). Лучше напишите очень простой код.
+- V8 [scanner.h](https://github.com/v8/v8/blob/main/src/parsing/scanner.h)
+- Clang [Lexer.cpp](https://github.com/llvm/llvm-project/blob/main/clang/lib/Lex/Lexer.cpp)
