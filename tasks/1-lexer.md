@@ -62,7 +62,7 @@
   | -----------                | -------                    |
   | `NUMBER`                   | `(0..9)+`                  |
   | `STRING`                   | `" <any char except">* "`  |
-  | `IDENTIFIER`               | `ALPHA ( ALPHA | DIGIT )*` |
+  | `IDENTIFIER`               | `ALPHA ( ALPHA..DIGIT )*`  |
   | `TRUE`                     | `true`                     |
   | `FALSE`                    | `false`                    |
   | `PLUS`                     | `+`                        |
@@ -94,13 +94,10 @@
 Изучите чужие реализации: 
 
 - [Hare](https://git.sr.ht/~sircmpwn/harec/tree/master/item/src/lex.c)
-
 - Язык Go
   - [Token](https://go.dev/src/go/token/token.go)
   - [Scanner](https://go.dev/src/go/scanner/scanner.go)
-
 - Компилятор языка C `cproc` [scan](https://github.com/michaelforney/cproc/blob/master/scan.c)
-
 - Документация компилятора rustc [Lexing and Parsing](https://rustc-dev-guide.rust-lang.org/the-parser.html)
 
   > rustc_lexer crate is responsible for breaking a &str into chunks
