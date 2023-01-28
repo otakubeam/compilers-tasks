@@ -1,6 +1,8 @@
-# Compilers course
+# Compilers course: building compilers is fun and easy
 
-## Stage 1: [Lexer](./tasks/1-lexer.md)
+This is the repo containing tasks for the compilers course at MIPT.
 
-## Stage 2: [Parser](./tasks/2-parser.md)
+## Tasks:
+- [Lexer](./tasks/1-lexer.md)
+- [Parser](./tasks/2-parser.md)
 
