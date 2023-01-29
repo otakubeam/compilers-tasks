@@ -1,229 +1,124 @@
-## Вторая стадия: парсер 
 
-### Пререквизиты
+# 3. Recursive Descent Parser
+
+В этом задании мы хотим научиться преобразовывать поток токенов в AST.
+
+## Пререквизиты
   
-- Лексер
+1. Lexer
+2. Ast
 
-### Задание
+## Рекурсивный спуск
 
-В этом задании от вас требуется научиться разпознавать арифметические выражения
-и нектороые утверждения абстрактного языка. Такие выражения встречаются почти в
-любом языке программирования.
+### Идея
 
-Но есть и исключения:
-
-- https://lisp-lang.org/learn/functions
-
-  Все выражения явно отделены друг от друга
-
-- https://iolanguage.org/tutorial.html
-
-  Используется метод message-passing
-
-- https://en.wikipedia.org/wiki/Forth_(programming_language)#Overview
-  
-  Все выражения stack-based (в обратной польской нотации)
-
-Для распознавания (отныне -- парсинг) правил языка нужно составить грамматику.
-В описании грамматики есть две важные сущности: precedence (приоритет) и
-(associativity) ассоциативность.
-
-Приоритет описывает, какие правила разпознаются сначала (образно говоря, какие
-кусочки грамматики сильнее притягиваются друг к другу). Например, `a + b * c`.
-
-Ассоциативность описывает, в какую сторону разпознаются правила с одинаковым
-приоритетом. Например, `a - b - c`, `a / b / c`. 
-
-![](./media/1-left-assoc.png)
-
-Нарисовать дерево ассоциативности.
-
-В языке Си: `a = b = 5;` -- правосторонняя ассоциативность.
-
-![](./media/2-right-assoc.png)
-
-#### Операторы в языке Си
-
-https://en.cppreference.com/w/c/language/operator_precedence
-
-В функциональных языках программированя, таких как Haskell, применение функций
-является левоассоциативной операцией [A Gentle Introduction to Haskell,
-Functions](https://www.haskell.org/tutorial/functions.html), а коструктор типов
-`->` -- правоассоциативной.
-
-### Какая у нас грамматика?
-
-Можно использовать такую грамматику, или несколько модифицировать её.
+Как бы мы хотели видеть нашу грамматику:
 
 ```
-expression     → equality
-equality       → comparison ( ( "!=" | "==" ) comparison )* ;
-comparison     → term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
-term           → factor ( ( "-" | "+" ) factor )* ;
-factor         → unary ( ( "/" | "*" ) unary )* ;
-
-unary          → ( "!" | "-" ) unary;
-primary        → "true" | "false" | NUMBER |
-                 STRING | IDENTIFIER | "(" expression ")";
+expression   ::= literal
+               | unary
+               | binary
+               | ( <expression> )
+               
+unary        ::= ( "-" | "!" ) <expression>
+binary       ::= <expression> <operator> <expression> ;
+operator     ::= "==" | "!=" | "<" | "<=" | ">" | ">="
+               | "+"  | "-"  | "*" | "/"
 ```
 
-### Рекурсивный спуск
+К сожалению, таком простом виде правила никак не учитывают **приоритет операций**. `1 + 2 * 3` — это `(1 + 2) * 3` или `1 + (2 * 3)` ? 
 
-Прочитайте [Crafting-Interpreters: parsing expressions](https://craftinginterpreters.com/parsing-expressions.html)
+Таблица приоритетов операций ([полная версия](https://en.cppreference.com/w/c/language/operator_precedence)):
+| Precedence |  Operator  |      Associativity      |
+|-------------------------|-------------------------|-
+|      1     | f() — call |           →             |
+|      2     |    - !     |           ←             |
+|      3     |    * /     |           →             |
+|      4     |    + -     |           →             |
+|      5     |    < <=    |           →             |
+|            |    > >=    |                         |
+|      6     |    == !=   |           →             |
 
-Каждое правило представляется в виде отдельной функции:
+Представьте себе бесконечный вправо корректный поток токенов в составе выражения.
 
-- Каждое правило разпознаёт терминалы и "проваливается" в правила с более
-  низким приоритетом. 
+В какой-то момент в этом потоке нам впервые встретится оператор с самым низким приоритетом: `==`. Это значит, что слева от него все операции имеют более выскоий приоритет. Значит их можно распарсить операцией: `ParseB` — которая работает теперь с грамматикой только из 5 правил.
 
-  Именно так мы получаем правильные приоритеты.
+```
+        Parse(...   ==   ...  ==  ...  ==  ... )
+      --------------------------------------------
+                    ==
+       ParseB(...)   |
+                     |
+                   Parse(...  ==  ...  ==  ...)
+```
 
-- Звезда клини (*) представлвяется в виде цикла.
+`ParseB` будет работать абсолютно аналагично:
 
-- Ассоциативные правила могут явно подвешивать разпознынные выражения в виде
-  правого или левого поддерева.
+```
+       ParseB(...   <=  ...  >=  ... )
+      ----------------------------------
+                    <=
+       ParseC(...)   |
+                     |
+                   ParseB(...  >=  ...)
+```
 
-Следующий пример иллюстрирует все четыре правила.
+Построим отображение из 
 
-``` cpp
+| Fake Name | Real Name    |
+| --------- | -----------  |
+| Parse  | ParseExpression |
+| ParseB | ParseRelational |
+| ParseC | ParseAdditive   |
+| ParseD | ParseMult       |
+| ParseE | ParseUnary      |
+| ParseF | ParsePostfix    |
+| ParseG | ParsePrimary    |
 
-Expression* ParseComparison() {
-  Expression* first = ParseTerm();
-
-  auto token = lexer_.Peek();
-  while (Matches(lex::TokenType::LT)) {
-    auto second = ParseTerm();
-    first = new ComparisonExpression(first, token, second);
-  }
-
-  return first;
-}
+Однако здесь есть проблема — ассоциативность. Рассмотрим пример `1 - 2 - 3`
+```
+       1 - 2 - 3                                   1 - 2 - 3
+      -----------                             ------------------
+         -                      !=                       -
+      1                                                    3 
+           2 - 3                                   1 - 2
 
 ```
 
-#### Изображение
 
-![Рекурсивный спуск](media/3-smaller.png)
+В грамматике языка мы можем решить её слудующим правилом, которое удостоверивается, что мы каждый раз отъедаем последний оператор.
+
+```
+<additive-expression> ::= <multiplicative-expression>
+                        | <additive-expression> - <multiplicative-expression>
+```
+
+Но что делать в реализации? Ведь мы не можем реализовать `ParseAdditive` c помощью прямого вызова `ParseAdditive` на потоке символов.
+
 
 #### Левая рекурсия
 
-Для одного языка можно постстроить несколько грамматик. Например, 
-```
-factor         → factor ( "/" | "*" ) unary
-               | unary ;
-
-factor         → unary ( ( "/" | "*" ) unary )* ;
-```
-
-У первого правила есть недостаток: мы не сможем распознать его с помощью
-рекурсивного спуска. Первым делом в функции мы запустимся рекурсивно.
-
-Второе правило решает эту проблему с помощью использования цикла. Но теперь мы
-должны расставлять ассоциативность в коде самостоятельно. (Первое учитывает её).
-
-#### Постфиксные выражения
-
-Иногда мы можем полностью распознать выражение только после того, как мы
-распознали её некоторую часть.
-
-Это явно выражается в присваивании `a = 5`. Сначала мы распознаём `a`,
-идентификатор, который может представлять выражение сам по себе. Затем
-встречаем `=` и требуется проверить, что то, что было до этого действительно
-является LvalueExpression.
+Правила такого вида называются леворекурсивными. Они решаются ~~дедовским способом~~ превращением рекурсии в итерацию. 
 
 ```
-Statement* Parser::ParseExprStatement() {
-  auto expr = ParseExpression();
-
-  if (Matches(lex::TokenType::ASSIGN)) {
-    // Check if the expression is assignable
-    if (auto target = dynamic_cast<LvalueExpression*>(expr)) {
-      return ParseAssignment(target);
-    }
-
-    throw parse::errors::ParseNonLvalueError{FormatLocation()};
-  }
-  ...
-}
+<additive-expression> ::= <multiplicative-expression> ( - <multiplicative-expression> )* ;
 ```
 
-Что такое LvalueExpression:
-- https://en.wikipedia.org/wiki/Value_(computer_science)#lrvalue
-- https://doc.rust-lang.org/reference/expressions.html#place-expressions-and-value-expressions
+Заметим, что здесь мы снова потеряли ассоциативность в грамматике
 
-  > A place expression is an expression that represents a memory location.
-  > These expressions are paths which refer to local variables, static
-  > variables, dereferences (*expr), array indexing expressions (expr[expr]),
-  > field references (expr.f) and parenthesized place expressions. All other
-  > expressions are value expressions.
+### Railroad diagrams
 
-- https://eli.thegreenplace.net/2011/12/15/understanding-lvalues-and-rvalues-in-c-and-c/
+![./media/4-railroad.png]()
 
+## Задание
 
-### Представление выражений
+1. Прочитайте [Crafting Interpreters: Parsing Expressions](https://craftinginterpreters.com/parsing-expressions.html)
+2. Создайте класс `Parser`, обрабатывающий все конструкции нашей грамматики
+3. Воспользуйтесь `PrintVisitor` из прошлого задания, чтобы отобразить полученные результаты
+4. Создайте класс-**калькулятор арифметических выражений**
+   - В первом приближении в качестве *таблицы символов* используйте `std::unordered_map`
+   - Динамически обрабатывайте случаи `1 + true` или `if "abc" then 123`, `if true then 123 else true`
 
-Естественным представлением для распознанных правил языка является дерево.
+## Реализация
 
-Рассмотрите готовые примеры: 
-
-- ast/expressions.hpp
-
-- ast/statements.hpp
-
-### Visitor pattern
-
-Обратите внимание на метод Accept(), имеющийся в каждом узле AST.
-
-```
-class ComparisonExpression : public Expression {
-  ...
-  virtual void Accept(Visitor* visitor) override {
-    visitor->VisitComparison(this);
-  }
-  ...
-}
-
-class BinaryExpression : public Expression {
-  ...
-  virtual void Accept(Visitor* visitor) override {
-    visitor->VisitBinary(this);
-  }
-  ...
-}
-```
-
-Это виртаульный метод, который для каждого наследника класса Expression, будет
-вызывать нужную функцию. Этот механизм называется Double Dispatching. Мы будем
-его использовать для реализации алгоритмов на дереве. Таким образом мы отделяем
-алгоритмы от данных. Это похоже на реализацию функций с помощью
-pattern-matching-а в функциональный языках.
-
-Прочитайте [Crafting-Interpreters: The expression
-problem](https://craftinginterpreters.com/representing-code.html#the-expression-problem).
-
-Иногда такое приближение функционального стиля в императивном языке называют
-поведенческим паттерном Посетитель (Visitor), иногда это называют идиомой
-языка.
-
-### Что от вас требуется?
-
-1. Дописать функцию Parser::ParseBinary()
-
-   Её потребуется разделить на несколько, чтобы правильно обрабатывались
-   приоритеты.
-
-2. Добавить функцию Parser::ParseIfStatement()
-3. Добавить функции для парсинга:
-   - block statement `{}`
-   - return statement
-
-   - определение функции
-     
-     Пока что забудем о типах аргументов
-
-     `fn f(a, b, c) {...}`
-
-   - вызов функции
-     
-     `f(1, 2, 4);`
 

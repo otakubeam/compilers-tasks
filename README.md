@@ -22,7 +22,7 @@ This is the repo containing tasks for the compilers course at MIPT.
 - and others...
 
 Стоит отметить языки компиляторы Hare, Cproc, Chibicc, которые имеют очень
-доступную кодовую базу. То же можно сказать про Ante.
+доступную кодовую базу
 
 Rust и GHC имеют очень хорошие и понятные wiki и статьи.
 
@@ -45,5 +45,5 @@ Rust и GHC имеют очень хорошие и понятные wiki и с�
 
 ## Tasks:
 - [Lexer](./tasks/1-lexer.md)
-- [Parser](./tasks/2-ast-visitors.md)
+- [Ast-Visitors](./tasks/2-ast-visitors.md)
 
