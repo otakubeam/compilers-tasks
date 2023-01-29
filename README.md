@@ -8,7 +8,7 @@ This is the repo containing tasks for the compilers course at MIPT.
 преобразованием в промежуточное представление и поддержкой рантайма языка.
 
 Курс создавался с опорой на реализациию компилятора языка
-[Etude](https://github.com/otakubeam/etude/), а так же многих других:
+[Etude](https://github.com/otakubeam/etude/), а также многих других:
 
 - Hare
 - Rust
