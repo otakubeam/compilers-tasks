@@ -46,4 +46,5 @@ Rust и GHC имеют очень хорошие и понятные wiki и с�
 ## Tasks:
 - [Lexer](./tasks/1-lexer.md)
 - [Ast-Visitors](./tasks/2-ast-visitors.md)
+- [Parser](./tasks/3-parser.md
 
