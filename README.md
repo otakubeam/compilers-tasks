@@ -10,24 +10,36 @@ This is the repo containing tasks for the compilers course at MIPT.
 Курс создавался с опорой на реализациию компилятора языка
 [Etude](https://github.com/otakubeam/etude/), а также многих других:
 
-- Hare
+- [Hare](https://harelang.org)
 - Rust
-- Cproc
-- Myrrdin
-- Chibicc
-- Tinycc
+- [Cproc](https://github.com/michaelforney/cproc/)
+- [Myrrdin](https://eigenstate.org/myrddin/)
+- [Chibicc](https://github.com/rui314/chibicc/tree/main/)
+- [Tinycc](https://bellard.org/tcc/)
 - GHC
 - Go
-- Ante
+- [Ante](http://antelang.org/)
 - and others...
 
 Стоит отметить языки компиляторы Hare, Cproc, Chibicc, которые имеют очень
 доступную кодовую базу
 
-Rust и GHC имеют очень хорошие и понятные wiki и статьи.
+Rust и GHC имеют очень хорошие и понятные wiki и статьи  
+[rustc-dev-guide](https://rustc-dev-guide.rust-lang.org/)  
+[The GHC Commentary](https://gitlab.haskell.org/ghc/ghc/-/wikis/commentary/#the-ghc-commentary)
 
 Основной книгой в начале курса является
 [Crafting Interpreters](https://craftinginterpreters.com/) by Robert Nystrom.
+
+Я также рекомендую слудующие книги:
+
+- Compilers: Principles, Techniques, and Tools — dragonbook
+- A Retargetable C Compiler Design and Implementation — lcc book
+- The Implementation of Functional Programming Languages — miranda book 
+- Basics of Compiler Design (Torben Ægidius Mogensen)
+- Introduction to Compilers and Language Design (Prof. Douglas Thain) University of Notre Dame
+- [Modern Compiler Implementation in ML](https://annas-archive.org/search?lang=&content=&ext=&sort=&q=modern+compiler+implementation+in+ML) 
+
 
 В своей идее курс содержит два подхода, которые конфклиткуют между собой.
 
@@ -45,7 +57,7 @@ Rust и GHC имеют очень хорошие и понятные wiki и с�
 
 ## Tasks:
 - [Lexer](./tasks/1-lexer.md)
-- [Ast-Visitors](./tasks/2-ast-visitors.md)
+- [Ast and Visitors](./tasks/2-ast-visitors.md)
 - [Parser](./tasks/3-parser.md)
 - [Symbol Table](./tasks/4-symbol-tables.md)
 
