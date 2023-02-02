@@ -21,7 +21,7 @@ This is the repo containing tasks for the compilers course at MIPT.
 - [Ante](http://antelang.org/)
 - and others...
 
-Стоит отметить языки компиляторы Hare, Cproc, Chibicc, которые имеют очень
+Стоит отметить компиляторы Hare, Cproc, Chibicc, которые имеют очень
 доступную кодовую базу
 
 Rust и GHC имеют очень хорошие и понятные wiki и статьи  
