@@ -55,4 +55,5 @@ Rust и GHC имеют очень хорошие и понятные wiki и с�
 - [Ast and Visitors](./tasks/2-ast-visitors.md)
 - [Parser](./tasks/3-parser.md)
 - [Symbol Table](./tasks/4-symbol-tables.md)
+- [Static Types](./tasks/5-static-types.md)
 
