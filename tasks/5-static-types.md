@@ -131,23 +131,24 @@ $\Gamma$ — это **контекст исполнения программы**
 1. Первые два правила позволяют нам строить суждения о литералах и
    идентификаторах.
 
-   $$
-  \begin{gather*}
-  \frac{n\in\Z}{\Gamma \vdash n : \mathtt{Int}} \ (\mathtt{Literal}) \qquad
-  \frac{(x, T) \in \Gamma}{\Gamma \vdash x : T} \ (\mathtt{Lookup})  \qquad
-  \end{gather*}
-  $$
+$$
+\begin{gather*}
+\frac{n \in \mathbb{N}}{\Gamma \vdash n : \mathtt{Int}} \ (\mathtt{Literal}) \qquad
+\frac{(x, T) \in \Gamma}{\Gamma \vdash x : T} \ (\mathtt{Lookup})  \qquad
+\end{gather*}
+$$
 
 2. Далее идут правила для отрицания и сложения.
 
-   $$
-   \begin{gather*}
-   \frac{\Gamma \vdash e : \mathtt{Int}}
-        {\Gamma \vdash \mathtt{-}e : \mathtt{Int}} \ (\mathtt{Neg}) \qquad
-   \frac{\Gamma \vdash e_1 : \mathtt{Int} \quad \Gamma \vdash e_2 : \mathtt{Int}}
-        {\Gamma \vdash e_1\mathtt{+}e_2 : \mathtt{Int}} \ (\mathtt{Sum})
-   \end{gather*}
-   $$
+$$
+\begin{gather*}
+\frac{\Gamma \vdash e : \mathtt{Int}}
+     {\Gamma \vdash \mathtt{-}e : \mathtt{Int}} \ (\mathtt{Neg}) \qquad
+\frac{\Gamma \vdash e_1 : \mathtt{Int} \quad \Gamma \vdash e_2 : \mathtt{Int}}
+     {\Gamma \vdash e_1\mathtt{+}e_2 : \mathtt{Int}} \ (\mathtt{Sum})
+\end{gather*}
+$$
+
 
 3. Наконец, идут два зеркальных правила:
 
@@ -159,11 +160,11 @@ $\Gamma$ — это **контекст исполнения программы**
 
    - Второе правило гласит, что при приминении функции к её аргументу получаем её результат.
 
-     $$
-     \frac{\Gamma,x :T_1 \vdash e : T_2 }{\Gamma \vdash (\lambda x{:}T_1. e) : (T_1 \to T_2)} \ (\mathtt{Abs}) \qquad
-     \frac{\Gamma \vdash e_1 : T \to T' \quad \Gamma \vdash e_2 : T}
-          {\Gamma \vdash e_1 \, e_2 : T'} \ (\mathtt{App})
-     $$
+$$
+\frac{\Gamma,x :T_1 \vdash e : T_2 }{\Gamma \vdash (\lambda x{:}T_1. e) : (T_1 \to T_2)} \ (\mathtt{Abs}) \qquad
+\frac{\Gamma \vdash e_1 : T \to T' \quad \Gamma \vdash e_2 : T}
+     {\Gamma \vdash e_1 \, e_2 : T'} \ (\mathtt{App})
+$$
 
 
 Аналогично можно придумывать и другие правила, например про `IF` и тд.
