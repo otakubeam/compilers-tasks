@@ -10,7 +10,7 @@
 
 > Whereof one cannot speak, thereof one must be silent.
 
-!["Ludwig Wittgenstein](./media/5-wittgenstein.jpg)
+<img src="./media/5-wittgenstein.jpg" width="300" align="right">
 
 **Фронтэнд** содержит все знания о природе и внешней структуре языка. Он
 позволяет нам мыслить абстракциями, не сильно заботясь о железе.
@@ -90,7 +90,7 @@ https://c9x.me/compile/doc/il-v1.1.html
 
 #### Load: Sign Extension / Zero extension
 
-В инструкции load есть два варианта:
+В инструкции `load` есть два варианта:
 
 ```
 
