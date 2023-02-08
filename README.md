@@ -2,10 +2,20 @@
 
 This is the repo containing tasks for the compilers course at MIPT.
 
+> Compilers are perceived to be magical artifacts, carefully crafted by the
+> wizards, and unfathomable by the mere mortals. Books on compilers are
+> better described as wizard-talk: written by and for a clique of
+> all-knowing practitioners. Real-life compilers are too complex to serve
+> as an educational tool. And the gap between real-life compilers and the
+> educational toy compilers is too wide. The novice compiler writer stands
+> puzzled facing an impenetrable barrier, “better write an interpreter
+> instead.”
+
 В течение курса студенты будут иметь _возможность_ своими руками потрогать,
 продумать и реализовать все аспекты современного компилятора. Начиная с
 грамматики и парсинга, продолжая системой типов, семантикой языка, модулями,
 преобразованием в промежуточное представление и поддержкой рантайма языка.
+
 
 Курс создавался с опорой на реализациию компилятора языка
 [Etude](https://github.com/otakubeam/etude/), а также многих других:
