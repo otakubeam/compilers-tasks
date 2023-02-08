@@ -5,27 +5,29 @@
 проекты и неотъемлимой их частью является тщательное рассмотрение области. Все
 свои находки и идеи записывайте.
 
-**Don't wait — write!**
-
-https://www.cis.upenn.edu/~sweirich/icfp-plmw15/slides/peyton-jones.pdf
+**Don't wait — write!** https://www.cis.upenn.edu/~sweirich/icfp-plmw15/slides/peyton-jones.pdf
 
 ## 1. Optimizations
 
 - Constant Folding
+
   Вычилсяем константы при компиляции.        
   https://en.wikipedia.org/wiki/Constant_folding
 - Inlining pass
+
   QBE не совершает *inlining*. К счастью, это можно легко исправить на
   фронтэнде. Реализуйте это.
 - Tail Calls Elimination
+
   Разматываем рекурсию в цикл.
      
 ## 2. HM + Typeclasses 
 
 Система типов Hindley-Milner позволяет автоматически выводить типы и обобщать
-их ($\forall \alpha$). Классы типов позволяют нам накладывать ограничения на
-$\alpha$. $\tt{compare} :: \forall \alpha. \tt{Ord}\  \alpha \Rightarrow \alpha
-→ \alpha → Bool$ 
+их ( $\forall \alpha$ ). Классы типов позволяют нам накладывать ограничения на
+$\alpha$. 
+
+$\tt{compare} :: \forall \alpha. \tt{Ord}\  \alpha \Rightarrow \alpha → \alpha → Bool$ 
 
 https://web.cecs.pdx.edu/~mpj/thih/thih.pdf
 
@@ -50,20 +52,21 @@ https://clang.llvm.org/docs/StandardCPlusPlusModules.html#how-to-produce-a-bmi
 ```
 match message {
 | .some.ping: ...
-| .some msg: ...        <<<----- ping checked again
+| .some msg: ...        <<<----- .some checked again
 | .none: ...
 ```
 
 Самый простой способ делать кодогенерацию pattern-matching-а совершает много
-повторных проверок. Конструируйте decision-tree, которое позволит выполнять
+повторных проверок. Конструируйте _decision-tree_, которое позволит выполнять
 проверки только один раз. В бонус к этому у вас получится проверка
-exhaustiveness и usefulness. 
+_exhaustiveness_ и _usefulness_. 
 
 https://julesjacobs.com/notes/patternmatching/patternmatching.pdf
  
 ## 6. Borrow Checker
 
 Возможно ли реализовать borrow checker своими руками?
+
 https://users.rust-lang.org/t/tutorial-on-implementing-a-borrow-checker-on-a-simplified-language/18791
 
 ## 7. Dictionary Passing Style vs VTable
@@ -76,7 +79,7 @@ https://okmij.org/ftp/Computation/typeclass.html
 
 ## 8. Address Sanitizer
 
-Инструментируйте все чтения и записи в программе, выделите shadow region,
+Инструментируйте все чтения и записи в программе, выделите _shadow region_,
 контролируйте состояние памяти.
 
 [AddressSanitizer: A Fast Address Sanity Checker](https://www.usenix.org/system/files/conference/atc12/atc12-final39.pdf)
@@ -85,6 +88,7 @@ https://okmij.org/ftp/Computation/typeclass.html
 ## 9. LLVM backend
 
 Реализуйте industrial-strength кодогенерацию.
+
 https://llvm.org/docs/tutorial/ + см. код компиляторов
 
 ## 10. VM backend (у кого не было Дединского)
@@ -143,36 +147,40 @@ counter(); // "2".
 
 ## 12. Stackless Coroutines 
 
-Нарезайте исполнение в точках co_await на кусочки, составьте state-machine из
+Нарезайте исполнение в точках _await_ на кусочки, составьте _state-machine_ из
 этих кусочков.
-
 
 ## 13. Await runtime
 
-В курсе concurrency мы реализовывали рантайм языка го. Давайте добавим к нему
+В курсе concurrency мы реализовывали рантайм языка го. Добавьте к нему
 синтаксического сахара в виде запуска горутин и передачи сообщений через
-каналы? https://gitlab.com/Lipovsky/await
+каналы.
+
+https://gitlab.com/Lipovsky/await
 
 ## 14. LSP
 
 Реализуйте поддерку language-server-protocol;
 
-Самое важное, пожалуй, go-to-definition и отображение ошибок и типов.
+Требуется принимать запросы и отдавать ответы в формате json
+
+Go-to-definition и отображение ошибок и типов.
 
 https://nickmqb.github.io/2019/11/24/building-a-language-server-for-muon.html
 
-Требуется принимать запросы и отдавать ответы в формате json. 
 
 ## 15. Garbage collection
 
 Реализуйте сборщик мусора для вашего языка.
-https://craftinginterpreters.com/garbage-collection.html
-https://gchandbook.org/
+
+- https://craftinginterpreters.com/garbage-collection.html
+- https://gchandbook.org/
 
 ## 16. Macros
 
 Самые продвинутые системы макросов. Rust + Racket. Какие другие способы
 метапрограммирования и compile time codegeneration ещё существуют?
+
 https://serokell.io/blog/introduction-to-template-haskell
 
 ## 17. Refinement types
@@ -181,8 +189,7 @@ Refinement types: a tutorial https://arxiv.org/pdf/2010.07763.pdf
 
 ## 18. Efficient Switching
  
-В зависимости от сгруппированности случаев в switch statement мы хотим
-генерировать разный код. Если случаи тесно сгруппированы, то это jump table.
+В зависимости от сгруппированности случаев в _switch statement_ мы хотим
+генерировать разный код. Если случаи тесно сгруппированы, то это _jump table_.
 Если случаи очень отдалены и редки, то имеет смысл пройтись по ним линейно или
 бинарным поиском. Реализуйте этот анализ.
-
