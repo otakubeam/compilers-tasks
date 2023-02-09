@@ -178,3 +178,4 @@ _pass_ компилятора. Затем мы научимся генериро
 
 1. Dragonbook — содержит лучший материал по парсингу.
 
+- [Simple but Powerful Pratt Parsing](https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html)
