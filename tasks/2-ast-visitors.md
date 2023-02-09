@@ -32,7 +32,7 @@
 
 Это позволяет писать выражения следующего вида:
 
-```go
+```kotlin
 var candidate = if node_value < val {
     &tree->left
 } else {
@@ -58,15 +58,17 @@ var candidate = if node_value < val {
 Первый набор правил, с которыми мы встретимся — **объявления**. 
 
 ```
+
 <file> ::= <declaration>*
 
 <declaration> ::= <function-definition>
                 | <variable-declaration>
 
 <function-declaration> ::= fun <identifier> <parameter-list> = <expression> ;
-    <parameter-list> ::= <identifier>*
+      <parameter-list> ::= <identifier>*
 
 <variable-declaration> ::= var <identifier> = <expression> ;
+
 ```
 
 Файл для нас сейчас представляет последовательность объявлений, каждое из
@@ -110,12 +112,14 @@ class FunDeclStatement : public Declaration {
 А в Go, например, утверждением.
 
 ```
+
 <statement> ::= <expression-statement>
               | <assignment-statement>
 
 <expression-statement> ::= <expression> ;
 
 <assignment-statement> ::= <unary-expression> = <expression>
+
 ```
 
 ### Expressions
@@ -123,6 +127,7 @@ class FunDeclStatement : public Declaration {
 Самая громоздкая часть. Про правила подробно поговорим в следующий раз.
 
 ```
+
 <expression> ::= <equality-expression>
 
 <equality-expression> ::= <relational-expression>
@@ -142,6 +147,7 @@ class FunDeclStatement : public Declaration {
 <multiplicative-expression> ::= <unary-expression>
                               | <multiplicative-expression> * <unary-expression>
                               | <multiplicative-expression> / <unary-expression>
+                              
 ```
 
 Пока достаточно заметить, что многие из них являются простыми бинарными
@@ -159,7 +165,10 @@ class FunDeclStatement : public Declaration {
 | Почему `<keyword-expression>` принимают `<expression>` ? Они очень похожи на `<unary-expression>` | Они жадные для удобства, чтобы не писать `return (a == b)` | 
 
 
+...продолжение грамматики
+
 ```
+
 <unary-expression> ::= <postfix-expression>
                      | <unary-operator> <unary-expression>
 
@@ -167,7 +176,7 @@ class FunDeclStatement : public Declaration {
                    | !
 
 <postfix-expression> ::= <primary-expression>
-                       | <postfix-expression> ( {<expression>,}* )
+                       | <postfix-expression> ( <expression>,* )
 
 <primary-expression> ::= <identifier>
                        | <constant>
@@ -175,7 +184,7 @@ class FunDeclStatement : public Declaration {
                        | <compound-expression>
                        | ( <expression> )
 
-<compound-expression> ::= { {<declaration> | <statement>}* <expression>? }
+<compound-expression> ::= { (<declaration> | <statement>)* <expression>? }
 
 <keyword-expression> ::= return <expression>
                        | yield <expression>
@@ -225,7 +234,7 @@ class FunDeclStatement : public Declaration {
 4. Создайте **контретного визитора**, реализующего печать дерева рекурсивным обходом.
 5. Вручную создайте небольшое дерево и примените к нему `PrintVisitor`.
 
-Цель — создать структуры данных, которые будут результатом работы парсера.
+Цель — создать структуры данных, которые будут результатом работы парсера.  
 Цель 2 — научиться работать с представлением программы в виде AST.
 
 ## Реализация
@@ -241,7 +250,7 @@ class FunDeclStatement : public Declaration {
 
   | Domain                    |  Возвращаемое значение         |
   |---------------------------|--------------------------------|
-  | Абстрактная интерпретация | Представление значения в языке |
+  | Интерпретация             | Представление значения в языке |
   | Проверка типов            | Структура типа в компиляторе   |
   | Перепиывание AST          | Вершина AST                    |
 
@@ -283,6 +292,11 @@ class FunDeclStatement : public Declaration {
 
 ```
 
+////////////////////////////////////////////////////////////////////////////////////
+//!                             Declarations
+////////////////////////////////////////////////////////////////////////////////////
+
+
 <file> ::= <declaration>*
 
 <declaration> ::= <function-definition>
@@ -293,11 +307,9 @@ class FunDeclStatement : public Declaration {
 <variable-declaration> ::= var <identifier> = <expression> ;
 
 
-
-
-
-
-
+////////////////////////////////////////////////////////////////////////////////////
+//!                             Expressions
+////////////////////////////////////////////////////////////////////////////////////
 
 
 <expression> ::= <equality-expression>
@@ -348,11 +360,9 @@ class FunDeclStatement : public Declaration {
              | <string>
 
 
-
-
-
-
-
+////////////////////////////////////////////////////////////////////////////////////
+//!                             Statements
+////////////////////////////////////////////////////////////////////////////////////
 
 
 <statement> ::= <expression-statement>
@@ -362,8 +372,7 @@ class FunDeclStatement : public Declaration {
 
 <assignment-statement> ::= <unary-expression> = <expression>
 
+
+////////////////////////////////////////////////////////////////////////////////////
+
 ```
-
-## Interesting Aritcles:
-
-- [Simple but Powerful Pratt Parsing](https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html)
