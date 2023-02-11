@@ -20,11 +20,18 @@
 - [go - What is a rune? - Stack Overflow](https://stackoverflow.com/questions/19310700/what-is-a-rune)
 
   [Strings, bytes, runes and characters in Go - The Go Programming Language](https://go.dev/blog/strings)
+  
+- [Textual types - The Rust Reference](https://doc.rust-lang.org/reference/types/textual.html)
    
 ### Refernces 
 
 - [UAX #15: Unicode Normalization Forms](https://unicode.org/reports/tr15/)
 - [UAX #29: Unicode Text Segmentation](https://unicode.org/reports/tr29/)
+
+### Encoding/Decoding
+
+- [Flexible and Economical UTF-8 Decoder](https://bjoern.hoehrmann.de/utf-8/decoder/dfa/)
+- [State machines are wonderful tools](https://nullprogram.com/blog/2020/12/31/)
 
 ## Doubles
 
