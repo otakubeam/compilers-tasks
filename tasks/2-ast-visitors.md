@@ -32,7 +32,7 @@
 
 Это позволяет писать выражения следующего вида:
 
-```kotlin
+```etude
 var candidate = if node_value < val {
     &tree->left
 } else {
@@ -57,7 +57,7 @@ var candidate = if node_value < val {
 
 Первый набор правил, с которыми мы встретимся — **объявления**. 
 
-```
+```ebnf
 
 <file> ::= <declaration>*
 
@@ -111,7 +111,7 @@ class FunDeclStatement : public Declaration {
 *области видимости* (об этом позже). В языке Си это также является выражением.
 А в Go, например, утверждением.
 
-```
+```ebnf
 
 <statement> ::= <expression-statement>
               | <assignment-statement>
@@ -126,7 +126,7 @@ class FunDeclStatement : public Declaration {
 
 Самая громоздкая часть. Про правила подробно поговорим в следующий раз.
 
-```
+```ebnf
 
 <expression> ::= <equality-expression>
 
@@ -167,7 +167,7 @@ class FunDeclStatement : public Declaration {
 
 ...продолжение грамматики
 
-```
+```ebnf
 
 <unary-expression> ::= <postfix-expression>
                      | <unary-operator> <unary-expression>
@@ -290,7 +290,7 @@ class FunDeclStatement : public Declaration {
 ## Appendix A. Grammar
 
 
-```
+```ebnf
 
 ////////////////////////////////////////////////////////////////////////////////////
 //!                             Declarations
