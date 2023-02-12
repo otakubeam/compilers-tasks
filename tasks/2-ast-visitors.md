@@ -58,7 +58,6 @@ var candidate = if node_value < val {
 Первый набор правил, с которыми мы встретимся — **объявления**. 
 
 ```ebnf
-
 <file> ::= <declaration>*
 
 <declaration> ::= <function-definition>
@@ -127,7 +126,6 @@ class FunDeclStatement : public Declaration {
 Самая громоздкая часть. Про правила подробно поговорим в следующий раз.
 
 ```ebnf
-
 <expression> ::= <equality-expression>
 
 <equality-expression> ::= <relational-expression>
@@ -147,7 +145,6 @@ class FunDeclStatement : public Declaration {
 <multiplicative-expression> ::= <unary-expression>
                               | <multiplicative-expression> * <unary-expression>
                               | <multiplicative-expression> / <unary-expression>
-                              
 ```
 
 Пока достаточно заметить, что многие из них являются простыми бинарными
@@ -168,7 +165,6 @@ class FunDeclStatement : public Declaration {
 ...продолжение грамматики
 
 ```ebnf
-
 <unary-expression> ::= <postfix-expression>
                      | <unary-operator> <unary-expression>
 
@@ -195,7 +191,6 @@ class FunDeclStatement : public Declaration {
 
 <constant> ::= <integer-constant>
              | <string>
-
 ```
 
 ### Tree Node
@@ -274,7 +269,8 @@ class FunDeclStatement : public Declaration {
   Иногда визитор определён не на всех вершинах дерева. Забегая вперёд, так
   работает, например, `GenAddress`-visitor. Не у всего можно вычислить адрес.
   
-  Тогда удобно сделать дополнительную структуру, которая аварийно завершается на всех вершинах AST, а в наследнике переопределять только интересующие нас случаи.
+  Тогда удобно сделать дополнительную структуру, которая аварийно завершается 
+  на всех вершинах AST, а в наследнике переопределять только интересующие нас случаи.
   
   ```cpp
   class AbortVisitor : public Visitor {
@@ -291,7 +287,6 @@ class FunDeclStatement : public Declaration {
 
 
 ```ebnf
-
 ////////////////////////////////////////////////////////////////////////////////////
 //!                             Declarations
 ////////////////////////////////////////////////////////////////////////////////////
@@ -374,5 +369,4 @@ class FunDeclStatement : public Declaration {
 
 
 ////////////////////////////////////////////////////////////////////////////////////
-
 ```
