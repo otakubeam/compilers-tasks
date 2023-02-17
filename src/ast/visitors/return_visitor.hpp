@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ast/visitors/abort_visitor.hpp>
+
 #include <ast/syntax_tree.hpp>
 
 #include <fmt/core.h>

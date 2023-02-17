@@ -10,7 +10,8 @@
 
 class Declaration : public Statement {
  public:
-  virtual void Accept(Visitor*){};
+  virtual void Accept(Visitor* visitor){
+  };
 
   virtual std::string_view GetName() = 0;
 };

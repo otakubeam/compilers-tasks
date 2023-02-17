@@ -22,7 +22,6 @@ class Lexer {
 
   Token GetPreviousToken();
 
-  // Check current token type and maybe consume it.
   bool Matches(lex::TokenType type);
 
  private:
@@ -58,6 +57,8 @@ class Lexer {
   Token peek_{};
 
   Scanner scanner_;
+  bool need_advance = true;
+
   IdentTable table_;
 };
 
