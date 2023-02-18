@@ -1,0 +1,38 @@
+#include <parse/parser.hpp>
+#include <parse/parse_error.hpp>
+
+///////////////////////////////////////////////////////////////////
+
+FunDeclStatement* Parser::ParseFunDeclarationStandalone() {
+}
+
+///////////////////////////////////////////////////////////////////
+
+Declaration* Parser::ParseDeclaration() {
+  if (auto var_declaration = ParseVarDeclStatement()) {
+    return var_declaration;
+  }
+
+  if (auto fun_declaration = ParseFunDeclStatement()) {
+    return fun_declaration;
+  }
+
+  return nullptr;
+}
+
+///////////////////////////////////////////////////////////////////
+
+FunDeclStatement* Parser::ParseFunDeclStatement() {
+}
+
+///////////////////////////////////////////////////////////////////
+
+auto Parser::ParseFormals() -> std::vector<lex::Token> {
+}
+
+///////////////////////////////////////////////////////////////////
+
+VarDeclStatement* Parser::ParseVarDeclStatement() {
+}
+
+///////////////////////////////////////////////////////////////////
