@@ -119,8 +119,8 @@ https://c9x.me/compile/doc/il-v1.1.html
 операции над регистрами. Однако при загрузке необходимо осознавать, *что* мы
 загружаем.
 
-- знаковый байт (*signed byte*) —> `loadsb` (sign-extension)
-- беззнаковый байт (*unsigned byte*) —> `loadub` (zero-extension)
+- знаковый байт (*signed byte*) $\Rightarrow$ `loadsb` (sign-extension)
+- беззнаковый байт (*unsigned byte*) $\Rightarrow$ `loadub` (zero-extension)
 
 #### Subtyping
 
