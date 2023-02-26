@@ -16,6 +16,7 @@ This is the repo containing tasks for the compilers course at MIPT.
 грамматики и парсинга, продолжая системой типов, семантикой языка, модулями,
 преобразованием в промежуточное представление и поддержкой рантайма языка.
 
+[Intro Slides](https://docs.google.com/presentation/d/1cJRcYXjcMUZOGnjbKBFpIzlGXSAFqjtUhoNCQO5aYbs/edit?usp=sharing)
 
 Курс создавался с опорой на реализациию компилятора языка
 [Etude](https://github.com/otakubeam/etude/), а также многих других:
