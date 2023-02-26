@@ -68,4 +68,6 @@ Rust и GHC имеют очень хорошие и понятные wiki и с�
 - [Symbol Table](./tasks/4-symbol-tables.md)
 - [Static Types](./tasks/5-static-types.md)
 - [Gen QBE IR](./tasks/6-qbe-ir.md)
-- [Structures](./tasks/7-structures.md)
+- [Testing [...] ]
+- [Structures](./tasks/7-structures.md) + [Pointers](./tasks/8-pointers.md)
+- [Type Inference [...] ]
