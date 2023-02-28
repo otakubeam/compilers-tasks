@@ -26,7 +26,7 @@
 
 **TLDR;** поддеживаем указатели на *самый конкретный тип* с помощью **DSU**.
 
-> — Type inference is mostly a matter of finding out the obvious.
+> — Type inference is mostly a matter of finding out the obvious.  
 > François Pottier, ведущий разработчик языка *OCaml*
 
 - Пусть **целочисленный литерал** имеет тип $\tt{Int}$
