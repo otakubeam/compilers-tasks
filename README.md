@@ -1,5 +1,7 @@
 # Compilers course: building compilers is fun and easy
 
+[Introduction Slides](https://docs.google.com/presentation/d/1cJRcYXjcMUZOGnjbKBFpIzlGXSAFqjtUhoNCQO5aYbs/edit?usp=sharing)
+
 This is the repo containing tasks for the compilers course at MIPT.
 
 > Compilers are perceived to be magical artifacts, carefully crafted by the
@@ -15,8 +17,6 @@ This is the repo containing tasks for the compilers course at MIPT.
 продумать и реализовать все аспекты современного компилятора. Начиная с
 грамматики и парсинга, продолжая системой типов, семантикой языка, модулями,
 преобразованием в промежуточное представление и поддержкой рантайма языка.
-
-[Intro Slides](https://docs.google.com/presentation/d/1cJRcYXjcMUZOGnjbKBFpIzlGXSAFqjtUhoNCQO5aYbs/edit?usp=sharing)
 
 Курс создавался с опорой на реализациию компилятора языка
 [Etude](https://github.com/otakubeam/etude/), а также многих других:
@@ -68,6 +68,6 @@ Rust и GHC имеют очень хорошие и понятные wiki и с�
 - [Symbol Table](./tasks/4-symbol-tables.md)
 - [Static Types](./tasks/5-static-types.md)
 - [Gen QBE IR](./tasks/6-qbe-ir.md)
-- [Testing [...] ]
+- [Testing [TBD] ]
 - [Structures](./tasks/7-structures.md) + [Pointers](./tasks/8-pointers.md)
-- [Type Inference [...] ]
+- [Type Inference [WIP] ] = [HM/Unification](tasks/9-HM-unification.md) + ...
