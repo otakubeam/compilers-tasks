@@ -23,23 +23,24 @@ This is the repo containing tasks for the compilers course at MIPT.
 Курс создавался с опорой на реализациию компилятора языка
 [Etude](https://github.com/otakubeam/etude/), а также многих других:
 
-- [Hare](https://harelang.org)
-- Rust
-- [Cproc](https://github.com/michaelforney/cproc/)
+- [Hare](https://harelang.org) ← **approachable!**
+- Rust 
+- [Cproc](https://github.com/michaelforney/cproc/) ← **approachable!**
 - [Myrrdin](https://eigenstate.org/myrddin/)
-- [Chibicc](https://github.com/rui314/chibicc/tree/main/)
+- [Chibicc](https://github.com/rui314/chibicc/tree/main/) ← **approachable!**
 - [Tinycc](https://bellard.org/tcc/)
 - GHC
 - Go
 - [Ante](http://antelang.org/)
 - and others...
 
-Стоит отметить компиляторы Hare, Cproc, Chibicc, которые имеют очень
-доступную кодовую базу
+Стоит отметить компиляторы *Hare, Cproc, Chibicc*, которые имеют очень
+доступную кодовую базу (пометка **approachable**).
 
-Rust и GHC имеют очень хорошие и понятные wiki и статьи  
-[rustc-dev-guide](https://rustc-dev-guide.rust-lang.org/)  
-[The GHC Commentary](https://gitlab.haskell.org/ghc/ghc/-/wikis/commentary/#the-ghc-commentary)
+Rust и GHC имеют очень хорошие и понятные *wiki* и *статьи*:
+
+- [Rustc Dev Guide](https://rustc-dev-guide.rust-lang.org/)  
+- [The GHC Commentary](https://gitlab.haskell.org/ghc/ghc/-/wikis/commentary/#the-ghc-commentary)
 
 ## Books
 
@@ -48,9 +49,9 @@ Rust и GHC имеют очень хорошие и понятные wiki и с�
 
 Я также рекомендую слудующие книги:
 
-- Compilers: Principles, Techniques, and Tools — dragonbook
-- A Retargetable C Compiler Design and Implementation — lcc book
-- The Implementation of Functional Programming Languages — miranda book 
+- Compilers: Principles, Techniques, and Tools — *dragonbook*
+- A Retargetable C Compiler Design and Implementation — *lcc book*
+- The Implementation of Functional Programming Languages — *miranda book*
 - Basics of Compiler Design (Torben Ægidius Mogensen)
 - Introduction to Compilers and Language Design (Prof. Douglas Thain) University of Notre Dame
 - [Modern Compiler Implementation in ML](https://annas-archive.org/search?lang=&content=&ext=&sort=&q=modern+compiler+implementation+in+ML) 
