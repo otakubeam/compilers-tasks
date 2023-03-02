@@ -18,6 +18,8 @@ This is the repo containing tasks for the compilers course at MIPT.
 грамматики и парсинга, продолжая системой типов, семантикой языка, модулями,
 преобразованием в промежуточное представление и поддержкой рантайма языка.
 
+## Compilers
+
 Курс создавался с опорой на реализациию компилятора языка
 [Etude](https://github.com/otakubeam/etude/), а также многих других:
 
@@ -39,6 +41,8 @@ Rust и GHC имеют очень хорошие и понятные wiki и с�
 [rustc-dev-guide](https://rustc-dev-guide.rust-lang.org/)  
 [The GHC Commentary](https://gitlab.haskell.org/ghc/ghc/-/wikis/commentary/#the-ghc-commentary)
 
+## Books
+
 Основной книгой в начале курса является
 [Crafting Interpreters](https://craftinginterpreters.com/) by Robert Nystrom.
 
@@ -51,6 +55,7 @@ Rust и GHC имеют очень хорошие и понятные wiki и с�
 - Introduction to Compilers and Language Design (Prof. Douglas Thain) University of Notre Dame
 - [Modern Compiler Implementation in ML](https://annas-archive.org/search?lang=&content=&ext=&sort=&q=modern+compiler+implementation+in+ML) 
 
+## Approaches
 
 В своей идее курс содержит два подхода
 
