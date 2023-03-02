@@ -58,7 +58,7 @@ $$\tt{id :: \forall a \ \ a \rightarrow a}$$
     <img src="https://raw.githubusercontent.com/otakubeam/etude-course-media/master/type_store.png" width="600">
     </kbd>
 
-3. **Обобщить** *свободные переменные типа*.
+3. **Обобщить** *свободные переменные типа*. Условно, заменить `$` на `G`.
  
     ```
                       Generalize(id.type) =
