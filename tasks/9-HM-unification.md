@@ -45,7 +45,7 @@
 * — функция `f3`?
    ```etude
       fun f3 verbose message = if verbose then message
-                        else "";
+                                          else "";
    ```
 
 Заметим, что мы здесь мысленно сделали:
