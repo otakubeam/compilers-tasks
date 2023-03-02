@@ -87,14 +87,14 @@ $$\tt{id :: \forall a \ \ a \rightarrow a}$$
 ```
 # main.et
 
-fun id x = x;    # <<---- (0) forall a. a -> a
+    fun id x = x;    # <<---- (0) forall a. a -> a
 
-fun main argc arvg = {
+    fun main argc arvg = {
 
-    id(true);    # <<---- (1) Bool -> Bool
+        id(true);    # <<---- (1) Bool -> Bool
 
-    id(0)        # <<---- (2) Int -> Int
-};
+        id(0)        # <<---- (2) Int -> Int
+    };
 ```
 
 Мы уже выяснили, что правильный тип для функции `id` — это $\forall a \ \ a → a$. 
@@ -119,12 +119,12 @@ fun main argc arvg = {
 
 #### Пример: ограниченный полиморфизм $id$
 
-```
-fun main = {
-    id(0)      # <<---- id :: Int -> Int ?
-};
+```etude
+    fun main = {
+        id(0)      # <<---- id :: Int -> Int ?
+    };
 
-fun id x = x;  # Yes, id :: Int -> Int! Ok!
+    fun id x = x;  # Yes, id :: Int -> Int! Ok!
 ```
 
 Чтобы преодолеть это ограничение, нужно отсортировать функции по их
