@@ -75,5 +75,5 @@ Rust и GHC имеют очень хорошие и понятные *wiki* и *
 - [Static Types](./tasks/05-static-types.md)
 - [Gen QBE IR](./tasks/06-qbe-ir.md)
 - [Testing [TBD] ]
-- [Structures](./tasks/7-structures.md) + [Pointers](./tasks/08-pointers.md)
+- [Structures](./tasks/07-structures.md) + [Pointers](./tasks/08-pointers.md)
 - [Type Inference [WIP] ] = [HM / Unification](tasks/09-HM-unification.md) + ...
