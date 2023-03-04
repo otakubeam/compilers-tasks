@@ -68,12 +68,12 @@ Rust и GHC имеют очень хорошие и понятные *wiki* и *
 гораздо быстрее.
 
 ## Tasks:
-- [Lexer](./tasks/1-lexer.md)
-- [Ast and Visitors](./tasks/2-ast-visitors.md)
-- [Parser](./tasks/3-parser.md)
-- [Symbol Table](./tasks/4-symbol-tables.md)
-- [Static Types](./tasks/5-static-types.md)
-- [Gen QBE IR](./tasks/6-qbe-ir.md)
+- [Lexer](./tasks/01-lexer.md)
+- [Ast and Visitors](./tasks/02-ast-visitors.md)
+- [Parser](./tasks/03-parser.md)
+- [Symbol Table](./tasks/04-symbol-tables.md)
+- [Static Types](./tasks/05-static-types.md)
+- [Gen QBE IR](./tasks/06-qbe-ir.md)
 - [Testing [TBD] ]
-- [Structures](./tasks/7-structures.md) + [Pointers](./tasks/8-pointers.md)
-- [Type Inference [WIP] ] = [HM / Unification](tasks/9-HM-unification.md) + ...
+- [Structures](./tasks/7-structures.md) + [Pointers](./tasks/08-pointers.md)
+- [Type Inference [WIP] ] = [HM / Unification](tasks/09-HM-unification.md) + ...
